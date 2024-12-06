@@ -11,24 +11,18 @@ public sealed class CommandInvoker
     {
         string[] parts = input.Split([' '], 2);
 
-        if(parts[0] != "type" && _commands.ContainsKey(parts[0]))
+        if(_commands.ContainsKey(parts[0]))
         {
-            _commands[parts[0]].Execute(parts[1]);
-        }
-        else if(parts[0] == "type")
-        {
-            if(_commands.ContainsKey(parts[1]))
-            {
-                _commands[parts[0]].Execute(parts[1]);
-            }
-            else
-            {
-                Console.WriteLine($"{parts[1]}: command not found");
-            }
+            _commands[parts[0]].Execute(parts[1], IsValidCommand);
         }
         else
         {
             Console.WriteLine($"{parts[0]}: command not found");
         }
+    }
+
+    private bool IsValidCommand(string value)
+    {
+        return _commands.ContainsKey(value);
     }
 }
