@@ -15,9 +15,16 @@ public sealed class CommandInvoker
         {
             _commands[parts[0]].Execute(parts[1]);
         }
-        else if(parts[0] == "type" && _commands.ContainsKey(parts[1]))
+        else if(parts[0] == "type")
         {
-            _commands[parts[0]].Execute(parts[1]);
+            if(_commands.ContainsKey(parts[1]))
+            {
+                _commands[parts[0]].Execute(parts[1]);
+            }
+            else
+            {
+                Console.WriteLine($"{parts[1]}: command not found");
+            }
         }
         else
         {
