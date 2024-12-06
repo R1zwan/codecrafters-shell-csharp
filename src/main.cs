@@ -6,11 +6,11 @@ while (true)
 {
     Console.Write("$ ");
     var command = Console.ReadLine();
-    if(command != null && command == "exit 0") {
-        break;
+    if(command != null && command.Contains("exit")) {
+        int exitCode = Convert.ToInt16( command.Substring(command.Length - 1));
+        Environment.Exit(exitCode);
     }
-    else {
-        Console.WriteLine($"{command}: command not found");
-    }
+    Console.WriteLine($"{command}: command not found");
+    
     
 }
