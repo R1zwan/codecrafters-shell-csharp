@@ -6,5 +6,12 @@ while (true)
 {
     Console.Write("$ ");
     var command = Console.ReadLine();
-    Console.WriteLine($"{command}: command not found");
+    if(command != null && command == "exit 0") {
+        Console.WriteLine($"exit status: {command.Substring(command.Length - 1)}");
+        break;
+    }
+    else {
+        Console.WriteLine($"{command}: command not found");
+    }
+    
 }
