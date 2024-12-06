@@ -9,8 +9,12 @@ while (true)
     if(command != null && command.Contains("exit")) {
         int exitCode = Convert.ToInt16( command.Substring(command.Length - 1));
         Environment.Exit(exitCode);
+        
     }
-    Console.WriteLine($"{command}: command not found");
-    
-    
+    else if(command != null && command.Contains("echo")) {
+        Console.WriteLine(command.Substring(5));
+    }
+    else {
+        Console.WriteLine($"{command}: command not found");
+    }
 }
