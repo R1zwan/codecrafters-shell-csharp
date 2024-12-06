@@ -7,7 +7,6 @@ while (true)
     Console.Write("$ ");
     var command = Console.ReadLine();
     if(command != null && command == "exit 0") {
-        Console.WriteLine($"exit status: {command.Substring(command.Length - 1)}");
         break;
     }
     else {
