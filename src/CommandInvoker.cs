@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 public sealed class CommandInvoker
 {
     private Dictionary<string, ICommand> _commands = new Dictionary<string, ICommand>();
@@ -14,6 +16,10 @@ public sealed class CommandInvoker
         if(_commands.ContainsKey(parts[0]))
         {
             _commands[parts[0]].Execute(parts[1], IsValidCommand);
+        }
+        else if(Utility.CheckPath(parts[0], out string executablePath))
+        {
+            Process.Start(executablePath, parts[1]);
         }
         else
         {
