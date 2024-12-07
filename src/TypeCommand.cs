@@ -1,6 +1,6 @@
 public class TypeCommand : ICommand
 {
-    private string _path = string.Empty;
+    private string _combinePath = string.Empty;
     public void Execute(string input, Predicate<string> isValidCommand)
     {   
         if(isValidCommand(input))
@@ -9,7 +9,7 @@ public class TypeCommand : ICommand
         }
         else if(CheckPath(input))
         {
-            Console.WriteLine($"{input} is {_path}");
+            Console.WriteLine($"{input} is {_combinePath}");
         }
         else
         {
@@ -19,16 +19,16 @@ public class TypeCommand : ICommand
 
     private bool CheckPath(string input)
     {
-        _path = string.Empty;
+        _combinePath = string.Empty;
         var executablePaths = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Process)?.Split([Consts.PATH_DELIMITER]);
         if(executablePaths != null && executablePaths.Length > 0)
         {
             foreach(var path in executablePaths)
             {
-                var getTheLeaveNodeInPath = Path.GetDirectoryName(path);
-                if(getTheLeaveNodeInPath == input)
+                var combinePath = Path.Combine(path, input);
+                if(Path.Exists(combinePath))
                 {
-                    _path = path;
+                    _combinePath = combinePath;
                     return true;
                 }
             }
