@@ -19,7 +19,9 @@ public sealed class CommandInvoker
         }
         else if(Utility.CheckPath(parts[0], out string executablePath))
         {
-            Process.Start(executablePath, parts[1]);
+            var process = Process.Start(executablePath, parts[1]);
+            string output = process.StandardOutput.ReadToEnd();
+            Console.WriteLine(output);
         }
         else
         {
