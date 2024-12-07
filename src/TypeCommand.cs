@@ -21,7 +21,6 @@ public class TypeCommand : ICommand
     {
         _combinePath = string.Empty;
         var executablePaths = Environment.GetEnvironmentVariable(Consts.PATH)?.Split([Consts.PATH_DELIMITER]);
-        Console.WriteLine($"{executablePaths} - are paths");
         if(executablePaths != null && executablePaths.Length > 0)
         {
             foreach(var path in executablePaths)
