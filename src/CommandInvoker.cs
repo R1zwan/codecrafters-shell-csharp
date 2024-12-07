@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 public sealed class CommandInvoker
 {
     private Dictionary<string, ICommand> _commands = new Dictionary<string, ICommand>();
@@ -19,9 +17,8 @@ public sealed class CommandInvoker
         }
         else if(Utility.CheckPath(parts[0], out string executablePath))
         {
-            var process = Process.Start(executablePath, parts[1]);
-            string output = process.StandardOutput.ReadToEnd();
-            Console.WriteLine(output);
+           ExternalCommand externalCommand = new ExternalCommand();
+           externalCommand.Execute(executablePath, parts[1]);
         }
         else
         {
@@ -34,3 +31,4 @@ public sealed class CommandInvoker
         return _commands.ContainsKey(value);
     }
 }
+
