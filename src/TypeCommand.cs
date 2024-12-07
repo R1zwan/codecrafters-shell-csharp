@@ -1,19 +1,24 @@
+using System.Diagnostics;
+
 public class TypeCommand : ICommand
 {
     private string _combinePath = string.Empty;
     public void Execute(string input, Predicate<string> isValidCommand)
     {   
-        if(isValidCommand(input))
+        string[] parts = input.Split([' '], 2);
+
+        if(isValidCommand(parts[0]))
         {
-            Console.WriteLine($"{input} is a shell builtin");
+            Console.WriteLine($"{parts[0]} is a shell builtin");
         }
-        else if(CheckPath(input))
+        else if(CheckPath(parts[0]))
         {
-            Console.WriteLine($"{input} is {_combinePath}");
+            Console.WriteLine($"{parts[0]} is {_combinePath}");
+            ExecutePathCommand(parts[1]);
         }
         else
         {
-            Console.WriteLine($"{input}: not found");
+            Console.WriteLine($"{parts[0]}: not found");
         }
     }
 
@@ -39,5 +44,10 @@ public class TypeCommand : ICommand
             //Console.WriteLine("Path enviroment variable not found");
             return false;
         }
+    }
+
+    private void ExecutePathCommand(string input)
+    {
+        Process.Start(_combinePath, input);
     }
 }
