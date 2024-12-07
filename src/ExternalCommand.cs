@@ -27,7 +27,7 @@ public class ExternalCommand
                 }
 
                 // Capture the output asynchronously
-                string output = process.StandardOutput.ReadToEnd();
+                string output = process.StandardOutput.ReadToEnd().Trim();
                 string errorOutput = process.StandardError.ReadToEnd();
 
                 // Wait for the process to exit
