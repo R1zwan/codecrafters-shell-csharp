@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 public sealed class Utility
 {
@@ -76,5 +77,22 @@ public sealed class Utility
         {
             return string.Empty;
         }
+    }
+
+    // Parse the command and its arguments, handling quotes and escaping
+    public static (string command, string[] arguments) ParseCommandAndArguments(string input)
+    {
+        // Regex pattern for matching quoted arguments (both single and double quotes)
+        var regex = new Regex(@"(?<=^|\s)(['""])(.*?)(?=\1)|([^\s""]+)", RegexOptions.Compiled);
+        var matches = regex.Matches(input);
+
+        var arguments = matches.Cast<Match>()
+            .Select(m => m.Groups[1].Success ? m.Groups[2].Value : m.Groups[3].Value)
+            .ToArray();
+
+        string command = arguments.Length > 0 ? arguments[0] : string.Empty;
+
+        // The first part is the command, the rest are arguments
+        return (command, arguments.Skip(1).ToArray());
     }
 }

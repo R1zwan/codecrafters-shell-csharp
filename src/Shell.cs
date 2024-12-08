@@ -18,8 +18,10 @@ public sealed class Shell
 
             try
             {
-                var parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                ICommand? command = _commandFactory.CreateCommand(parts[0]);
+                //var parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                // Parse the input while handling quotes
+                var (commandName, arguments) = Utility.ParseCommandAndArguments(input);
+                ICommand? command = _commandFactory.CreateCommand(commandName);
 
                 // If the command is null, it means it's invalid
                 if (command == null)
@@ -28,7 +30,6 @@ public sealed class Shell
                 }
                 else
                 {
-                    string[] arguments = parts.Skip(1).ToArray();
                     command.Execute(arguments);
                 }
             }
