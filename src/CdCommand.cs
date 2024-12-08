@@ -9,7 +9,7 @@ public class CdCommand : ICommand
         }
         else
         {
-            Console.WriteLine($"cd: {arguments}: No such file or directory");
+            Console.WriteLine($"cd: {changeDirectory}: No such file or directory");
         }
     }
 }
