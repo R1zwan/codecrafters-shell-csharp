@@ -7,7 +7,7 @@ public sealed class CommandFactory
         // Define built-in commands
         _builtInCommands = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
-            "echo", "exit", "type", "pwd", "cd", "cat"
+            "echo", "exit", "type", "pwd", "cd"
         };
     }
 
@@ -29,7 +29,13 @@ public sealed class CommandFactory
             // Check if the command exists as an external command
             if (IsExternalCommandValid(command))
             {
-                return new ExternalCommand(command);
+                switch (command)
+                {
+                    case "cat":
+                        return new CatCommand();
+                    default:
+                        return new ExternalCommand(command);
+                }
             }
             else
             {
@@ -53,8 +59,6 @@ public sealed class CommandFactory
                 return new PwdCommand();
             case "cd":
                 return new CdCommand();
-            case "cat":
-                return new CatCommand();
             default:
                 return null;
         }
