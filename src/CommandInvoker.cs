@@ -11,7 +11,7 @@ public sealed class CommandInvoker
     {
         try
         {
-            string[] parts = input.Split([' '], 2);
+            string[] parts = input.Split([' '], 2, StringSplitOptions.RemoveEmptyEntries);
 
             if(_commands.ContainsKey(parts[0]))
             {
@@ -27,9 +27,9 @@ public sealed class CommandInvoker
                 Console.WriteLine($"{parts[0]}: command not found");
             }
         }
-        catch(Exception)
+        catch(Exception e)
         {
-            throw;
+            Console.WriteLine(e.Message);
         }
     }
 
