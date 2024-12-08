@@ -7,7 +7,7 @@ public sealed class CommandFactory
         // Define built-in commands
         _builtInCommands = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
-            "echo", "exit", "type", "pwd"
+            "echo", "exit", "type", "pwd", "cd"
         };
     }
 
@@ -51,6 +51,8 @@ public sealed class CommandFactory
                 return new TypeCommand(IsValidBuiltInCommand);
             case "pwd":
                 return new PwdCommand();
+            case "cd":
+                return new CdCommand();
             default:
                 return null;
         }
