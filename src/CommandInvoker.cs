@@ -9,20 +9,27 @@ public sealed class CommandInvoker
 
     public void ExecuteCommand(string input)
     {
-        string[] parts = input.Split([' '], 2);
+        try
+        {
+            string[] parts = input.Split([' '], 2);
 
-        if(_commands.ContainsKey(parts[0]))
-        {
-            _commands[parts[0]].Execute(parts[1], IsValidCommand);
+            if(_commands.ContainsKey(parts[0]))
+            {
+                _commands[parts[0]].Execute(parts[1], IsValidCommand);
+            }
+            else if(Utility.CheckPath(parts[0], out string executablePath))
+            {
+            ExternalCommand externalCommand = new ExternalCommand();
+            externalCommand.Execute(executablePath, parts[1]);
+            }
+            else
+            {
+                Console.WriteLine($"{parts[0]}: command not found");
+            }
         }
-        else if(Utility.CheckPath(parts[0], out string executablePath))
+        catch(Exception)
         {
-           ExternalCommand externalCommand = new ExternalCommand();
-           externalCommand.Execute(executablePath, parts[1]);
-        }
-        else
-        {
-            Console.WriteLine($"{parts[0]}: command not found");
+            throw;
         }
     }
 
