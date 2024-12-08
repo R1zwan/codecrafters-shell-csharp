@@ -83,7 +83,7 @@ public sealed class Utility
     public static (string command, string[] arguments) ParseCommandAndArguments(string input)
     {
         // Regex pattern for matching quoted arguments (both single and double quotes)
-        var regex = new Regex(@"(?<=^|\s)(['""])(.*?)(?=\1)|([^\s""]+)", RegexOptions.Compiled);
+        var regex = new Regex(@"(?<=^|\s)(['""])(.*?)(?=\1)|([^\s'""]+)", RegexOptions.Compiled);
         var matches = regex.Matches(input);
 
         // Process matches to extract arguments
