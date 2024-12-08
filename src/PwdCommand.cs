@@ -3,9 +3,9 @@
 /// </summary>
 public class PwdCommand : ICommand
 {
-    public void Execute(string input, Predicate<string> IsValidCommand)
+    public void Execute(string[] arguments)
     {
-        string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        Console.WriteLine(baseDirectory);
+        // Print current directory (pwd)
+        Console.WriteLine(Directory.GetCurrentDirectory());
     }
 }

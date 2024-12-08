@@ -1,7 +1,7 @@
 public class EchoCommand : ICommand
 {
-    public void Execute(string input, Predicate<string> isValidCommand)
+    public void Execute(string[] arguments)
     {
-        Console.WriteLine(input);
+        Console.WriteLine(string.Join(" ", arguments));
     }
 }

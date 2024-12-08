@@ -1,8 +1,15 @@
 public class TypeCommand : ICommand
 {
-    public void Execute(string input, Predicate<string> isValidCommand)
+    private readonly Predicate<string> _isValidBuiltInCommand;
+    public TypeCommand(Predicate<string> isValidBuiltInCommand)
+    {
+        _isValidBuiltInCommand = isValidBuiltInCommand;
+    }
+
+    public void Execute(string[] arguments)
     {   
-        if(isValidCommand(input))
+        string input = string.Join(" ", arguments);
+        if(_isValidBuiltInCommand(input))
         {
             Console.WriteLine($"{input} is a shell builtin");
         }

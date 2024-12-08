@@ -1,8 +1,8 @@
 public class ExitCommand : ICommand
 {
-    public void Execute(string input, Predicate<string> isValidCommand)
+    public void Execute(string[] arguments)
     {
-        int exitCode = Convert.ToInt16(input);
+        int exitCode = Convert.ToInt16(string.Join(" ", arguments));
         Environment.Exit(exitCode);
     }
 }
