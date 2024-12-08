@@ -5,6 +5,7 @@ public class PwdCommand : ICommand
 {
     public void Execute(string input, Predicate<string> IsValidCommand)
     {
-        Console.WriteLine(Environment.CurrentDirectory);
+        string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        Console.WriteLine(baseDirectory);
     }
 }
