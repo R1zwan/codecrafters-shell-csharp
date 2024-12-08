@@ -1,3 +1,5 @@
+using System.Text;
+
 public class CatCommand : ICommand
 {
     public void Execute(string[] arguments)
@@ -9,7 +11,8 @@ public class CatCommand : ICommand
         }
         else
         {
-            string content = string.Empty;
+            // To store the concatenated file contents
+            var concatenatedContent = new StringBuilder();
             // Process each file argument
             foreach (var file in arguments)
             {
@@ -19,7 +22,7 @@ public class CatCommand : ICommand
                     if (File.Exists(file))
                     {
                         // Read the content of the file
-                        content = string.Join(" ", content, File.ReadAllText(file).TrimEnd());
+                        concatenatedContent.Append(File.ReadAllText(file).TrimEnd());
                     }
                     else
                     {
@@ -31,7 +34,7 @@ public class CatCommand : ICommand
                     Console.WriteLine($"Error reading file '{file}': {ex.Message}");
                 }
             }
-            Console.WriteLine(content);
+            Console.WriteLine(concatenatedContent.ToString());
         }
     }
 }
