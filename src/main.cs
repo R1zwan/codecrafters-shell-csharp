@@ -7,6 +7,7 @@ CommandInvoker invoker = new CommandInvoker();
     invoker.RegisterCommand("echo", new EchoCommand());
     invoker.RegisterCommand("exit", new ExitCommand());
     invoker.RegisterCommand("type", new TypeCommand());
+    invoker.RegisterCommand("pwd", new PwdCommand());
 
 while (true)
 {
