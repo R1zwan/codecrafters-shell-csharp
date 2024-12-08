@@ -86,8 +86,18 @@ public sealed class Utility
         var regex = new Regex(@"(?<=^|\s)(['""])(.*?)(?=\1)|([^\s""]+)", RegexOptions.Compiled);
         var matches = regex.Matches(input);
 
+        // Process matches to extract arguments
         var arguments = matches.Cast<Match>()
-            .Select(m => m.Groups[1].Success ? m.Groups[2].Value : m.Groups[3].Value)
+            .Select(m =>
+            {
+                // If Group[1] is matched, it's a quoted argument
+                if (m.Groups[1].Success)
+                {
+                    return m.Groups[2].Value; // Extract the content inside the quotes
+                }
+                // Otherwise, it's an unquoted argument
+                return m.Groups[3].Value;
+            })
             .ToArray();
 
         string command = arguments.Length > 0 ? arguments[0] : string.Empty;
