@@ -30,6 +30,7 @@ public sealed class Shell
                 }
                 else
                 {
+
                     command.Execute(arguments);
                 }
             }
