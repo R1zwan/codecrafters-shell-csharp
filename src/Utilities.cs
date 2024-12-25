@@ -97,7 +97,7 @@ public sealed class Utility
                     return m.Groups[2].Value; // Extract the content inside the quotes
                 }
                 // Otherwise, it's an unquoted argument
-                return m.Groups[3].Value;
+                return ProcessEscapedString(m.Groups[3].Value);
             })
             .ToArray();
 
