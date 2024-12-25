@@ -24,7 +24,7 @@ public class CatCommand : ICommand
                     if (string.IsNullOrEmpty(filePath) && File.Exists(filePath))
                     {
                         // Read the content of the file
-                        concatenatedContent.Append(File.ReadAllText(file).TrimEnd());
+                        concatenatedContent.Append(File.ReadAllText(filePath).TrimEnd());
                     }
                     else
                     {
