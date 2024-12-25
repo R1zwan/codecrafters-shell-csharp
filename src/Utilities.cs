@@ -94,10 +94,10 @@ public sealed class Utility
                 // If Group[1] is matched, it's a quoted argument
                 if (m.Groups[1].Success)
                 {
-                    return ProcessEscapedString(m.Groups[2].Value); // Extract the content inside the quotes
+                    return m.Groups[2].Value; // Extract the content inside the quotes
                 }
                 // Otherwise, it's an unquoted argument
-                return ProcessEscapedString(m.Groups[3].Value);
+                return m.Groups[3].Value;
             })
             .ToArray();
 
