@@ -18,15 +18,17 @@ public class CatCommand : ICommand
             {
                 try
                 {
+                    string filePath = Path.Combine(string.Join(Path.DirectorySeparatorChar, file.Replace("'", "")));
+
                     // Check if the file exists
-                    if (File.Exists(file))
+                    if (string.IsNullOrEmpty(filePath) && File.Exists(filePath))
                     {
                         // Read the content of the file
                         concatenatedContent.Append(File.ReadAllText(file).TrimEnd());
                     }
                     else
                     {
-                        Console.WriteLine($"cat: {file}: No such file");
+                        Console.WriteLine($"cat: {filePath}: No such file");
                     }
                 }
                 catch (Exception ex)
