@@ -21,7 +21,7 @@ public class CatCommand : ICommand
                     string filePath = Path.Combine(string.Join(Path.DirectorySeparatorChar, file.Replace("'", "")));
 
                     // Check if the file exists
-                    if (string.IsNullOrEmpty(filePath) && File.Exists(filePath))
+                    if (string.IsNullOrEmpty(filePath) && File.Exists("'" + filePath + "'"))
                     {
                         // Read the content of the file
                         concatenatedContent.Append(File.ReadAllText(filePath).TrimEnd());
