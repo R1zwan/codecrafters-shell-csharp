@@ -97,9 +97,15 @@ public sealed class Utility
         foreach (string commandArgument in commandSplit.Skip(1).ToArray())
         {
             string unescapedArgument = ReplaceBackslashesOutsideQuotes(commandArgument);
-            commandArguments.Add(unescapedArgument.Trim('\'', '"'));
+            if (unescapedArgument[0] == '\'')
+            {
+                commandArguments.Add(unescapedArgument.Trim('\'', '"'));
+            }
+            else
+            {
+                commandArguments.Add(unescapedArgument);
+            }
         }
-
         // The first part is the command, the rest are arguments
         return (command, commandArguments.ToArray());
     }
