@@ -20,7 +20,7 @@ public class CatCommand : ICommand
                 {
                     string filePath = Path.Combine(string.Join(Path.DirectorySeparatorChar, file.Replace("'", "")));
 
-                    Console.WriteLine(Utility.ExecuteCommand("cat", filePath));
+                    concatenatedContent.Append(Utility.ExecuteCommand("cat", filePath));
 
                     // concatenatedContent.Append(File.ReadAllText(filePath).TrimEnd());
 
