@@ -18,7 +18,7 @@ public class CatCommand : ICommand
             {
                 try
                 {
-                    string filePath = Path.Combine(string.Join(Path.DirectorySeparatorChar, file));
+                    string filePath = Path.Combine(string.Join(Path.DirectorySeparatorChar, file.Replace("'", "")));
 
                     // Check if the file exists
                     if (string.IsNullOrEmpty(filePath) && File.Exists(filePath))
