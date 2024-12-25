@@ -19,9 +19,10 @@ public class CatCommand : ICommand
                 try
                 {
                     string filePath = Path.Combine(string.Join(Path.DirectorySeparatorChar, file.Replace("'", "")));
-                    filePath = "\"" + filePath + "\"";
 
-                    concatenatedContent.Append(File.ReadAllText(filePath).TrimEnd());
+                    Console.WriteLine(Utility.ExecuteCommand("cat", filePath));
+
+                    // concatenatedContent.Append(File.ReadAllText(filePath).TrimEnd());
 
                     // Check if the file exists
                     // if (string.IsNullOrEmpty(filePath) && File.Exists(filePath))
