@@ -121,6 +121,7 @@ public sealed class Utility
                 // If we were escaping, append the current character without escaping it
                 sb.Append(c);
                 isEscaped = false;
+                Console.WriteLine("escaped - " + sb.ToString());
             }
             else
             {
@@ -133,6 +134,7 @@ public sealed class Utility
                 {
                     // Otherwise, append the character as-is
                     sb.Append(c);
+                    Console.WriteLine("else - " + sb.ToString());
                 }
             }
         }
