@@ -18,9 +18,15 @@ public class CatCommand : ICommand
             {
                 try
                 {
-                    // string filePath = Path.Combine(string.Join(Path.DirectorySeparatorChar, file));
+                    string filePath = Path.Combine(string.Join(Path.DirectorySeparatorChar, file.Replace("'", "")));
+                    var filePath1 = "\"" + filePath + "\"";
 
-                    concatenatedContent.Append(Utility.ExecuteCommand("cat", file));
+                    Console.WriteLine(filePath1);
+
+                    Console.WriteLine(Utility.ExecuteCommand("cat", filePath1));
+
+                    Console.WriteLine(Utility.ExecuteCommand("cat", "\'" + filePath + "\'"));
+                    concatenatedContent.Append(Utility.ExecuteCommand("cat", filePath));
 
                     // concatenatedContent.Append(File.ReadAllText(filePath).TrimEnd());
 
