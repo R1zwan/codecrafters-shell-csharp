@@ -21,16 +21,18 @@ public class CatCommand : ICommand
                     string filePath = Path.Combine(string.Join(Path.DirectorySeparatorChar, file.Replace("'", "")));
                     filePath = "'" + filePath + "'";
 
+                    concatenatedContent.Append(File.ReadAllText(filePath).TrimEnd());
+
                     // Check if the file exists
-                    if (string.IsNullOrEmpty(filePath) && File.Exists(filePath))
-                    {
-                        // Read the content of the file
-                        concatenatedContent.Append(File.ReadAllText(filePath).TrimEnd());
-                    }
-                    else
-                    {
-                        Console.WriteLine($"cat: {filePath}: No such file");
-                    }
+                    // if (string.IsNullOrEmpty(filePath) && File.Exists(filePath))
+                    // {
+                    //     // Read the content of the file
+                    //     concatenatedContent.Append(File.ReadAllText(filePath).TrimEnd());
+                    // }
+                    // else
+                    // {
+                    //     Console.WriteLine($"cat: {filePath}: No such file");
+                    // }
                 }
                 catch (Exception ex)
                 {
