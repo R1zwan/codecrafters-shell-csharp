@@ -30,6 +30,7 @@ public sealed class Shell
                 }
                 else
                 {
+                    Console.WriteLine("testing - " + string.Join(" ", arguments));
                     command.Execute(arguments);
                 }
             }
