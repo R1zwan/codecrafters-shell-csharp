@@ -84,61 +84,55 @@ public sealed class Utility
     public static (string command, string[] arguments) ParseCommandAndArguments(string input)
     {
         // Regex pattern for matching quoted arguments (both single and double quotes)
-        var regex = new Regex(@"(?:<=^|\s)(['""])(.*?)(?=\1)|([^\s'\""]+)", RegexOptions.Compiled);
-        var matches = regex.Matches(input);
+        var regex = new Regex(@"[^\s""']+|""([^""]*)""|'([^']*)'", RegexOptions.Compiled);
 
         // Process matches to extract arguments
-        var arguments = matches.Cast<Match>()
-            .Select(m =>
-            {
-                // If Group[1] is matched, it's a quoted argument
-                if (m.Groups[1].Success)
-                {
-                    return m.Groups[2].Value; // Extract the content inside the quotes
-                }
-                // Otherwise, it's an unquoted argument
-                return ProcessEscapedString(m.Groups[3].Value);
-            })
-            .ToArray();
+        var commandSplit = regex.Matches(input)
+                              .Cast<Match>()
+                              .Select(m => m.Value)
+                              .ToArray();
 
-        string command = arguments.Length > 0 ? arguments[0] : string.Empty;
-
-        // The first part is the command, the rest are arguments
-        return (command, arguments.Skip(1).ToArray());
-    }
-
-    // Process escape sequences like \space, \\ for backslashes, etc.
-    private static string ProcessEscapedString(string input)
-    {
-        var sb = new StringBuilder();
-        bool isEscaped = false;
-
-        for (int i = 0; i < input.Length; i++)
+        string command = commandSplit.Length > 0 ? commandSplit[0] : string.Empty;
+        List<string> commandArguments = [];
+        foreach (string commandArgument in commandSplit.Skip(1).ToArray())
         {
-            char c = input[i];
-            if (isEscaped)
-            {
-                // If we were escaping, append the current character without escaping it
-                sb.Append(c);
-                isEscaped = false;
-                Console.WriteLine("escaped - " + sb.ToString());
-            }
-            else
-            {
-                if (c == '\\' && (i + 1 < input.Length && (input[i + 1] == ' ' || input[i + 1] == '\\')))
-                {
-                    // If there's a backslash, and it's escaping a space or another backslash
-                    isEscaped = true; // Next character should be treated as a literal
-                }
-                else
-                {
-                    // Otherwise, append the character as-is
-                    sb.Append(c);
-                    Console.WriteLine("else - " + sb.ToString());
-                }
-            }
+            string unescapedArgument = ReplaceBackslashesOutsideQuotes(commandArgument);
+            commandArguments.Add(unescapedArgument.Trim('\'', '"'));
         }
 
-        return sb.ToString();
+        // The first part is the command, the rest are arguments
+        return (command, commandArguments.ToArray());
+    }
+
+    private static string ReplaceBackslashesOutsideQuotes(string input)
+    {
+        var result = new StringBuilder();
+        bool insideSingleQuotes = false;
+        bool insideDoubleQuotes = false;
+        for (int i = 0; i < input.Length; i++)
+        {
+            char currentChar = input[i];
+            if (currentChar == '\'' && !insideDoubleQuotes)
+            {
+                insideSingleQuotes = !insideSingleQuotes;
+            }
+            else if (currentChar == '"' && !insideSingleQuotes)
+            {
+                insideDoubleQuotes = !insideDoubleQuotes;
+            }
+            else if (currentChar == '\\' && !insideSingleQuotes &&
+                       !insideDoubleQuotes)
+            {
+                // Skip the backslash and add the next character if one exists
+                i++;
+                if (i < input.Length)
+                {
+                    result.Append(input[i]);
+                }
+                continue;
+            }
+            result.Append(currentChar);
+        }
+        return result.ToString();
     }
 }
